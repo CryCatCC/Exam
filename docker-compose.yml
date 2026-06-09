@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  auth_service:
+    build: ./auth_service
+    ports:
+      - "8006:8000"
+    environment:
+      - STUDENT_N=6
+    networks:
+      - lab-network
+
+  resource_service:
+    build: ./resource_service
+    ports:
+      - "9006:8000"
+    environment:
+      - STUDENT_N=6
+    depends_on:
+      - auth_service
+    networks:
+      - lab-network
+
+networks:
+  lab-network:
+    driver: bridge
